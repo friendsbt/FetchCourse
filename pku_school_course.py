@@ -43,7 +43,7 @@ class PKUSchoolCourse:
         courses = set([cls.clean_course_name(c.text.split()[0]) for c in courses])
 
         # write to file
-        with open('fetched_data/' + school_name, 'w',
+        with open('fetched_data/pku/' + school_name, 'w',
                   encoding=cls.FILE_ENCODING) as f:
             for c in courses:
                 f.writelines(c + '\n')
