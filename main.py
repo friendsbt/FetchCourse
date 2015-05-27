@@ -8,12 +8,12 @@ from pku_school_course import PKUSchoolCourse
 
 START_PAGE = 'http://dean.pku.edu.cn/pkudean/course/kcb.php?ll=1'
 
-htmltree = html.fromstring(requests.get(START_PAGE).text)
-school_urls = [a.attrib['href'] for a in htmltree.cssselect("table>tr>td>a")]
+r = requests.get(START_PAGE)
+r.encoding = 'gb2312'
+htmltree = html.fromstring(r.text)
+school_urls = [a for a in htmltree.cssselect("table>tr>td>a")]
 
-PKUSchoolCourse().fetch_courses(school_urls[0])
 
-"""
+p = PKUSchoolCourse()
 for school_url in school_urls:
-    p = PKUSchoolCourse()
-"""
+    p.fetch_courses(school_url.attrib['href'], school_url.text)
