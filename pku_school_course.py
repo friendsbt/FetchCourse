@@ -2,9 +2,9 @@
 
 from pprint import pprint as print
 import urllib.parse as up
-import re
 from lxml import html
 import requests
+from utils import *
 
 
 class PKUSchoolCourse:
@@ -40,7 +40,7 @@ class PKUSchoolCourse:
             .cssselect("table tr td:nth-child(2) a")
 
         # remove dups
-        courses = set([cls.clean_course_name(c.text.split()[0]) for c in courses])
+        courses = set([clean_course_name(c.text.split()[0]) for c in courses])
 
         # write to file
         with open('fetched_data/pku/' + school_name, 'w',
@@ -48,15 +48,7 @@ class PKUSchoolCourse:
             for c in courses:
                 f.writelines(c + '\n')
 
-    @staticmethod
-    def clean_course_name(name):
-        """
-        去除课程名中的多余部分，abc（def）gh1-> abcgh
-        """
-        name = re.sub(r'\（.*\）|\(.*\)', '', name)
-        return re.sub(r'(Ⅰ|Ⅱ|Ⅲ|Ⅳ|Ⅴ|I|II|III|IV|V|[0-9])$', r'', name)
-
 
 if __name__ == '__main__':
-    print(PKUSchoolCourse().clean_course_name("毕业论文（资产定价）讨论班II"))
-    print(PKUSchoolCourse().clean_course_name("毕业论文（资产定价）2"))
+    print(clean_course_name("毕业论文（资产定价）讨论班II"))
+    print(clean_course_name("毕业论文（资产定价）2"))
