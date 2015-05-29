@@ -4,7 +4,6 @@ from pprint import pprint as print
 import urllib.parse as up
 from lxml import html
 import requests
-from utils import *
 
 
 class PKUSchoolCourse:
@@ -40,7 +39,7 @@ class PKUSchoolCourse:
             .cssselect("table tr td:nth-child(2) a")
 
         # remove dups
-        courses = set([clean_course_name(c.text.split()[0]) for c in courses])
+        courses = set([c.text.split()[0] for c in courses])
 
         # write to file
         with open('fetched_data/pku/' + school_name, 'w',
@@ -48,7 +47,3 @@ class PKUSchoolCourse:
             for c in courses:
                 f.writelines(c + '\n')
 
-
-if __name__ == '__main__':
-    print(clean_course_name("毕业论文（资产定价）讨论班II"))
-    print(clean_course_name("毕业论文（资产定价）2"))
