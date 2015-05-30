@@ -23,9 +23,12 @@ for file in school_course_file:
             courses.add(line.strip())
 
 index = 0
-for course in sorted(courses):
-    index += 1
-    json_data["course"][index] = course
+
+with open('course/course.txt', 'w', encoding='utf-8') as txt:
+    for course in sorted(courses):
+        index += 1
+        txt.write(course + '\n')
+        json_data["course"][index] = course
 
 json_data["meta"]["max"] = index
 
